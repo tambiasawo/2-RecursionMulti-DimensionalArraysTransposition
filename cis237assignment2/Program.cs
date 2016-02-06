@@ -46,6 +46,8 @@ namespace cis237assignment2
             /// </summary>
             MazeSolver mazeSolver = new MazeSolver();
 
+            //mazeSolver.PrintMaze(maze1);
+
             /// <summary>
             /// Tell the instance to solve the first maze with the passed maze, and start coordinates.
             /// </summary>
