@@ -54,7 +54,7 @@ namespace cis237assignment2
 
 
 
-            if (yStart <= maxY && yStart >= 0 && xStart <= maxX && xStart >= 0)
+            if (yStart <= maxY && yStart >= 0 && xStart <= maxX && xStart >= 0 && maze[y, x] == '.')
             {
                 //PrintMaze(maze);
                 mazeTraversal(maze, y, x, maxY, maxX);
@@ -91,11 +91,11 @@ namespace cis237assignment2
             if (y + 1 > maxY || y - 1 < 0 || x + 1 > maxX || x - 1 < 0)
             {
                 maze[y, x] = 'X';
-                PrintMaze(maze);
+                //PrintMaze(maze);
             }
-            else
+            else if(maze[y + 1, x] == '.' || maze[y, x + 1] == '.' || maze[y - 1, x] == '.' || maze[y, x - 1] == '.')
             {
-                maze[y, x] = 'O';
+                maze[y, x] = 'X';
                 //Down
                 if (maze[y + 1, x] == '.')
                 {
@@ -121,27 +121,10 @@ namespace cis237assignment2
                     mazeTraversal(maze, y, x - 1, maxY, maxX);
                 }
             }
-            
-
-
-
-        }
-
-        public void PrintMaze(char[,] maze)
-        {
-            Int32 rowLength = maze.GetLength(0);
-            Int32 colLength = maze.GetLength(1);
-
-            for (Int32 y = 0; y < rowLength; y++)
+            else
             {
-                for (Int32 x = 0; x < colLength; x++)
-                {
-                    Console.Write(String.Format("{0} ", maze[y, x]));
-                }
-                Console.Write(Environment.NewLine);
+                maze[y, x] = 'O';
             }
-            //Console.ReadLine(); Used to pause the program for testing.
-            Console.WriteLine(Environment.NewLine);
         }
     }
 }

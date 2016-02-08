@@ -49,19 +49,22 @@ namespace cis237assignment2
             /// Create a new instance of a mazeSolver.
             /// </summary>
             MazeSolver mazeSolver = new MazeSolver();
+            UserInterface ui = new UserInterface();
 
-            mazeSolver.PrintMaze(maze1); //Used to test what the maze looks like.
-
+            UserInterface.OriginalMessage(maze1);
+            
             /// <summary>
             /// Tell the instance to solve the first maze with the passed maze, and start coordinates.
             /// </summary>
             mazeSolver.SolveMaze(maze1, X_START, Y_START);
+            UserInterface.OriginalSolved(maze1);
             
-            mazeSolver.PrintMaze(maze2); //Used to test what the maze looks like.
-
+            UserInterface.TransposedMessage(maze2);
+            
             //Solve the transposed maze.
             mazeSolver.SolveMaze(maze2, X_START, Y_START);
-
+            UserInterface.TransposedSolved(maze2);
+            
         }
 
         /// <summary>
