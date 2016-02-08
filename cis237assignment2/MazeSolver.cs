@@ -56,7 +56,7 @@ namespace cis237assignment2
 
             if (yStart <= maxY && yStart >= 0 && xStart <= maxX && xStart >= 0)
             {
-                PrintMaze(maze);
+                //PrintMaze(maze);
                 mazeTraversal(maze, y, x, maxY, maxX);
 
             }
@@ -65,6 +65,16 @@ namespace cis237assignment2
                 Console.WriteLine("Your maze was not loaded successfully.");
             }
 
+
+            //if (y + 1 > maxY || y - 1 < 0 || x + 1 > maxX || x - 1 < 0)
+            //{
+            //    maze[y, x] = 'X';
+            //    PrintMaze(maze);
+            //}
+            //else
+            //{
+            //    mazeTraversal(maze, y, x, maxY, maxX);
+            //}
 
             //Do work needed to use mazeTraversal recursive call and solve the maze.
         }
@@ -86,32 +96,35 @@ namespace cis237assignment2
             else
             {
                 maze[y, x] = 'O';
-                //Right
+                //Down
                 if (maze[y + 1, x] == '.')
                 {
-                    maze[y, x] = 'X';
+                    //maze[y, x] = 'O';
                     mazeTraversal(maze, y + 1, x, maxY, maxX);
                 }
-                //Down
+                //Right
                 if (maze[y, x + 1] == '.')
                 {
-                    maze[y, x] = 'X';
+                    //maze[y, x] = 'O';
                     mazeTraversal(maze, y, x + 1, maxY, maxX);
                 }
-                //Left
+                //Up
                 if (maze[y - 1, x] == '.')
                 {
-                    maze[y, x] = 'X';
+                    //maze[y, x] = 'O';
                     mazeTraversal(maze, y - 1, x, maxY, maxX);
                 }
-                //Up
+                //Left
                 if (maze[y, x - 1] == '.')
                 {
-                    maze[y, x] = 'X';
+                    //maze[y, x] = 'O';
                     mazeTraversal(maze, y, x - 1, maxY, maxX);
                 }
             }
             
+
+
+
         }
 
         public void PrintMaze(char[,] maze)
@@ -127,7 +140,8 @@ namespace cis237assignment2
                 }
                 Console.Write(Environment.NewLine);
             }
-            Console.ReadLine();
+            //Console.ReadLine(); Used to pause the program for testing.
+            Console.WriteLine(Environment.NewLine);
         }
     }
 }

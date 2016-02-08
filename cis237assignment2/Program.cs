@@ -41,20 +41,23 @@ namespace cis237assignment2
             { '#', '.', '.', '.', '.', '.', '.', '#', '.', '.', '.', '#' },
             { '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' } };
 
+            
+            //Create the second maze by transposing the first maze
+            char[,] maze2 = transposeMaze(maze1);
+            
             /// <summary>
             /// Create a new instance of a mazeSolver.
             /// </summary>
             MazeSolver mazeSolver = new MazeSolver();
 
-            //mazeSolver.PrintMaze(maze1);
+            mazeSolver.PrintMaze(maze1); //Used to test what the maze looks like.
 
             /// <summary>
             /// Tell the instance to solve the first maze with the passed maze, and start coordinates.
             /// </summary>
             mazeSolver.SolveMaze(maze1, X_START, Y_START);
-
-            //Create the second maze by transposing the first maze
-            char[,] maze2 = transposeMaze(maze1);
+            
+            mazeSolver.PrintMaze(maze2); //Used to test what the maze looks like.
 
             //Solve the transposed maze.
             mazeSolver.SolveMaze(maze2, X_START, Y_START);
@@ -80,7 +83,20 @@ namespace cis237assignment2
         static char[,] transposeMaze(char[,] mazeToTranspose)
         {
             //Write code her to create a transposed maze.
-            return new char[1, 1];
+            Int32 rowLength = mazeToTranspose.GetLength(0);
+            Int32 colLength = mazeToTranspose.GetLength(1);
+            char[,] transposedMaze = new char[colLength, rowLength];
+
+
+            for (Int32 y = 0; y < colLength; y++)
+            {
+                for (Int32 x = 0; x < rowLength; x++)
+                {
+                    transposedMaze[y, x] = mazeToTranspose[x, y];
+                }
+            }
+            //return new char[1, 1];
+            return transposedMaze;
         }
     }
 }
