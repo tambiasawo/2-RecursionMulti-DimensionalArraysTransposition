@@ -20,12 +20,13 @@ namespace cis237assignment2
         char[,] maze;
         int xStart;
         int yStart;
+        Boolean MazeSolved;
 
         /// <summary>
         /// Default Constuctor to setup a new maze solver.
         /// </summary>
         public MazeSolver()
-        {}
+        { }
 
 
         /// <summary>
@@ -51,12 +52,14 @@ namespace cis237assignment2
             Int32 colLength = maze.GetLength(1);
             Int32 maxY = rowLength - 1;
             Int32 maxX = colLength - 1;
+            MazeSolved = false;
 
 
 
             if (yStart <= maxY && yStart >= 0 && xStart <= maxX && xStart >= 0 && maze[y, x] == '.')
             {
                 //PrintMaze(maze);
+
                 mazeTraversal(maze, y, x, maxY, maxX);
 
             }
@@ -91,39 +94,62 @@ namespace cis237assignment2
             if (y + 1 > maxY || y - 1 < 0 || x + 1 > maxX || x - 1 < 0)
             {
                 maze[y, x] = 'X';
+                MazeSolved = true;
                 //PrintMaze(maze);
             }
-            else if(maze[y + 1, x] == '.' || maze[y, x + 1] == '.' || maze[y - 1, x] == '.' || maze[y, x - 1] == '.')
+            if (!MazeSolved)
             {
-                maze[y, x] = 'X';
-                //Down
-                if (maze[y + 1, x] == '.')
+                if (maze[y + 1, x] == '.' || maze[y, x + 1] == '.' || maze[y - 1, x] == '.' || maze[y, x - 1] == '.')
                 {
-                    //maze[y, x] = 'O';
-                    mazeTraversal(maze, y + 1, x, maxY, maxX);
+                    maze[y, x] = 'X';
+
+                    //Down
+                    if (maze[y + 1, x] == '.')
+                    {
+                        //maze[y, x] = 'O';
+                        mazeTraversal(maze, y + 1, x, maxY, maxX);
+                        if (!MazeSolved)
+                        {
+                            maze[y +1, x] = 'O';
+                        }
+
+                    }
+                    //Right
+                    if (maze[y, x + 1] == '.')
+                    {
+                        //maze[y, x] = 'O';
+                        mazeTraversal(maze, y, x + 1, maxY, maxX);
+                        if (!MazeSolved)
+                        {
+                            maze[y, x + 1] = 'O';
+                        }
+                    }
+                    //Up
+                    if (maze[y - 1, x] == '.')
+                    {
+                        //maze[y, x] = 'O';
+                        mazeTraversal(maze, y - 1, x, maxY, maxX);
+                        if (!MazeSolved)
+                        {
+                            maze[y - 1, x] = 'O';
+                        }
+                    }
+                    //Left
+                    if (maze[y, x - 1] == '.')
+                    {
+                        //maze[y, x] = 'O';
+                        mazeTraversal(maze, y, x - 1, maxY, maxX);
+                        if (!MazeSolved)
+                        {
+                            maze[y, x - 1] = 'O';
+                        }
+                    }
                 }
-                //Right
-                if (maze[y, x + 1] == '.')
-                {
-                    //maze[y, x] = 'O';
-                    mazeTraversal(maze, y, x + 1, maxY, maxX);
-                }
-                //Up
-                if (maze[y - 1, x] == '.')
-                {
-                    //maze[y, x] = 'O';
-                    mazeTraversal(maze, y - 1, x, maxY, maxX);
-                }
-                //Left
-                if (maze[y, x - 1] == '.')
-                {
-                    //maze[y, x] = 'O';
-                    mazeTraversal(maze, y, x - 1, maxY, maxX);
-                }
-            }
-            else
-            {
-                maze[y, x] = 'O';
+                //else
+                //{
+                //    maze[y, x] = 'O';
+                //}
+
             }
         }
     }
