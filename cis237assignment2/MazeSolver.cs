@@ -17,10 +17,15 @@ namespace cis237assignment2
         /// <summary>
         /// Class level memeber variable for the mazesolver class
         /// </summary>
+        
+        //Established a class level boolean to work in conjunction with the recursive loop.
+        //Established class level Integers to set the maximum array values.
         char[,] maze;
         int xStart;
         int yStart;
         Boolean MazeSolved;
+        Int32 maxY;
+        Int32 maxX;
 
         /// <summary>
         /// Default Constuctor to setup a new maze solver.
@@ -46,39 +51,32 @@ namespace cis237assignment2
             this.xStart = xStart;
             this.yStart = yStart;
 
+            //Simplified variables.
+            //Obtained the length and height of the 2d array that has been passed.
+            //Set the maximum array lenght and height values.
+            //Set the MazeSolved boolean to false to allow the recursive call to continue until it becomes true.
             Int32 x = xStart;
             Int32 y = yStart;
             Int32 rowLength = maze.GetLength(0);
             Int32 colLength = maze.GetLength(1);
-            Int32 maxY = rowLength - 1;
-            Int32 maxX = colLength - 1;
+            maxY = rowLength - 1;
+            maxX = colLength - 1;
             MazeSolved = false;
 
 
-
+            //Verifies that the start location is within the 2d array limits and begins the recursive call.
+            //Otherwise it displays an error message stating that the 2d array has not been properly loaded or the start coordinates
+            //are outside the 2d array limits.
             if (yStart <= maxY && yStart >= 0 && xStart <= maxX && xStart >= 0 && maze[y, x] == '.')
             {
-                //PrintMaze(maze);
-
-                mazeTraversal(maze, y, x, maxY, maxX);
+                mazeTraversal(maze, y, x);
 
             }
             else
             {
-                Console.WriteLine("Your maze was not loaded successfully.");
+                UserInterface.MazeError();
             }
-
-
-            //if (y + 1 > maxY || y - 1 < 0 || x + 1 > maxX || x - 1 < 0)
-            //{
-            //    maze[y, x] = 'X';
-            //    PrintMaze(maze);
-            //}
-            //else
-            //{
-            //    mazeTraversal(maze, y, x, maxY, maxX);
-            //}
-
+            
             //Do work needed to use mazeTraversal recursive call and solve the maze.
         }
 
@@ -88,26 +86,36 @@ namespace cis237assignment2
         /// Feel free to change the return type if you like, or pass in parameters that you might need.
         /// This is only a very small starting point.
         /// </summary>
-        private void mazeTraversal(char[,] maze, Int32 y, Int32 x, Int32 maxY, Int32 maxX)
+         
+        //The recursive call that will only exit if the current location is on an outside wall of the maze.
+        //It will continue to call itself until this condition has been meet or there is a stack overflow.
+        private void mazeTraversal(char[,] maze, Int32 y, Int32 x)
         {
             //Implement maze traversal recursive call
+            //Test to see if the current location is on an outside wall.
+            //If so, place an "X" in that location and change the MazeSoved boolean which will stop the recursive call.
             if (y + 1 > maxY || y - 1 < 0 || x + 1 > maxX || x - 1 < 0)
             {
                 maze[y, x] = 'X';
                 MazeSolved = true;
-                //PrintMaze(maze);
             }
+            //If the current location is not on an outside wall, then the maze must not be solved.
+            //Continue the recursive call.
+            //Once the MazeSolve boolen becomes true, the recursive call will end.
             if (!MazeSolved)
             {
+                //If any location around the current location is a valid move, continue the recursive call.
                 if (maze[y + 1, x] == '.' || maze[y, x + 1] == '.' || maze[y - 1, x] == '.' || maze[y, x - 1] == '.')
                 {
+                    //Place an "X" in the location of every valid move.
                     maze[y, x] = 'X';
 
                     //Down
+                    //Test if there is a valid move in the location below of the current location.
+                    //If this leads to a dead-end, place O's on the path that lead you there.
                     if (maze[y + 1, x] == '.')
                     {
-                        //maze[y, x] = 'O';
-                        mazeTraversal(maze, y + 1, x, maxY, maxX);
+                         mazeTraversal(maze, y + 1, x);
                         if (!MazeSolved)
                         {
                             maze[y +1, x] = 'O';
@@ -115,41 +123,39 @@ namespace cis237assignment2
 
                     }
                     //Right
+                    //Test if there is a valid move in the location to the right of the current location.
+                    //If this leads to a dead-end, place O's on the path that lead you there.
                     if (maze[y, x + 1] == '.')
                     {
-                        //maze[y, x] = 'O';
-                        mazeTraversal(maze, y, x + 1, maxY, maxX);
+                        mazeTraversal(maze, y, x + 1);
                         if (!MazeSolved)
                         {
                             maze[y, x + 1] = 'O';
                         }
                     }
                     //Up
+                    //Test if there is a valid move in the location above of the current location.
+                    //If this leads to a dead-end, place O's on the path that lead you there.
                     if (maze[y - 1, x] == '.')
                     {
-                        //maze[y, x] = 'O';
-                        mazeTraversal(maze, y - 1, x, maxY, maxX);
+                        mazeTraversal(maze, y - 1, x);
                         if (!MazeSolved)
                         {
                             maze[y - 1, x] = 'O';
                         }
                     }
                     //Left
+                    //Test if there is a valid move in the location to the left of the current location.
+                    //If this leads to a dead-end, place O's on the path that lead you there.
                     if (maze[y, x - 1] == '.')
                     {
-                        //maze[y, x] = 'O';
-                        mazeTraversal(maze, y, x - 1, maxY, maxX);
+                        mazeTraversal(maze, y, x - 1);
                         if (!MazeSolved)
                         {
                             maze[y, x - 1] = 'O';
                         }
                     }
                 }
-                //else
-                //{
-                //    maze[y, x] = 'O';
-                //}
-
             }
         }
     }
